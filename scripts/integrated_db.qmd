@@ -1,0 +1,125 @@
+---
+title: "Integrated Databases"
+format: pdf
+editor: visual
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+```{r, message=FALSE}
+library(cowplot)
+library(readxl)
+library(stringr)
+library(tidyverse)
+```
+
+```{r, message=FALSE}
+full_edges <- read_csv('../data/expanded_edge_list.csv')
+orig_edges <- read_xlsx('../data/Resource Interaction Table.xlsx', sheet = 1)
+orig_edges %>% 
+  filter(predicate != 'has construction method') -> orig_edges
+
+fill_deg <- max(full_edges$distance) + 1
+
+nodes <- read_xlsx('../data/Resource Interaction Table.xlsx', sheet = 2)
+nodes %>% 
+  mutate(category = str_replace(category, '\\/| ', '\n')) -> nodes
+
+nodes %>% 
+  filter(category == 'Integrated\nDB') %>% 
+  pull(node) -> reffed_idbs
+```
+
+```{r, fig.height=4, fig.width=9}
+full_edges %>% 
+  pull(distance) %>% 
+  unique() %>% 
+  factor() -> distance_factor
+
+levels(distance_factor) <- rev(levels(distance_factor))
+category_sorted <- c('Microbe', 'Protein', 
+                    'Metabolites', 'Disease',
+                    'Integrated\nDB')
+
+full_edges %>% 
+  select(source, target, distance) %>% 
+  mutate(distance = as.numeric(distance),
+         distance = abs(distance - fill_deg)) %>% 
+  spread(target, distance, fill = 0) -> edge_mat
+
+source_order <- hclust(dist(edge_mat[,-1]))$order
+source_sorted <- edge_mat[source_order,1]$source
+
+full_edges %>% 
+  merge(nodes, by.x = 'target', by.y = 'node') %>% 
+  mutate(distance = factor(distance, levels = levels(distance_factor)),
+         category = factor(category, levels = category_sorted),
+         reffed_idbs = source %in% reffed_idbs,
+         source_f = factor(source, 
+                           levels = source_sorted)) -> plot_dat 
+
+plot_dat %>% 
+  ggplot(aes(x = target, y = source_f, 
+             fill = distance)) +
+    geom_tile(color = 'black') +
+    facet_grid(~category, scales = 'free', space = 'free') +
+    theme_bw(base_size = 11) + 
+    theme(axis.text.x = element_text(angle = 270 + 45,
+                                     hjust = 0,
+                                     vjust = 0.5)) +
+    scale_fill_brewer(guide = guide_legend(reverse = TRUE)) +
+    labs(x = 'Target DB',
+         y = 'Source DB',
+         fill = 'Reference Degree',
+         title = 'Integrated Databases Links') -> db_viz_final
+
+db_viz_final
+```
+
+```{r, fig.width=9, fig.height=4}
+#source_order <- hclust(dist(edge_mat[,-1]))$order
+#source_sorted <- edge_mat[source_order,1]
+#source_sorted <- append(source_sorted, 'hmdad')
+
+orig_edges %>% 
+  merge(nodes, by.x = 'target', by.y = 'node') %>% 
+  mutate(category = factor(category, levels = category_sorted)) %>% 
+  ggplot(aes(x = target, y = source, 
+             fill = 1)) +
+    geom_tile(color = 'black') +
+    facet_grid(~category, scales = 'free_x', space = 'free_x') +
+    theme_bw(base_size = 11) + 
+    theme(axis.text.x = element_text(angle = 270 + 45,
+                                     hjust = 0,
+                                     vjust = 0.5)) +
+    labs(x = 'Target DB',
+         y = 'Source DB',
+         fill = 'Reference Degree') -> db_viz_init
+```
+
+```{r}
+plot_grid(db_viz_init, db_viz_final,
+          ncol = 1) -> db_viz_compare
+```
+
+# Graph Plotting
+
+```{r}
+
+ggsave('../db_viz_init.png',
+       plot = db_viz_init,
+       width = 8, 
+       height = 4)
+
+ggsave('../db_viz_final.png',
+       plot = db_viz_final,
+       width = 8, 
+       height = 4)
+
+ggsave('../db_viz_compare.png',
+       plot = db_viz_compare,
+       width = 8,
+       height = 7)
+```

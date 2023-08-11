@@ -1,0 +1,40 @@
+source	predicate	target
+gutMGene	has functional link	Protein
+gutMGene	has taxonomic link	Microbe
+gutMGene	has chemical link	Metabolites
+gutMGene	has chemical link	Integrated Source DB
+gutMDisorder	has taxonomic link	Microbe
+gutMDisorder	has chemical link	Metabolites
+gutMDisorder	has disease link	Disease
+biochem4j	has functional link	Protein
+biochem4j	has taxonomic link	Microbe
+biochem4j	has chemical link	Metabolites
+biochem4j	has chemical link	Integrated Source DB
+WikiPathways	has functional link	Protein
+WikiPathways	has chemical link	Metabolites
+WikiPathways	has chemical link	Integrated Source DB
+UniFuncNet	has functional link	Protein
+UniFuncNet	has chemical link	Metabolites
+UniFuncNet	has chemical link	Integrated Source DB
+MiMeDB	has taxonomic link	Microbe
+MiMeDB	has chemical link	Metabolites
+MiMeDB	has chemical link	Integrated Source DB
+MiKG4MD	has chemical link	Integrated Source DB
+MiKG4MD	has pathway link	Integrated Source DB
+MiKG4MD	has disease link	Disease
+MiKG4MD	has taxonomic link	Disease
+MDAD	has functional link	Protein
+MDAD	has chemical link	Metabolites
+MACADAM	has functional link	Protein
+MACADAM	has taxonomic link	Microbe
+KG-Microbe	has functional link	Protein
+KG-Microbe	has taxonomic link	Microbe
+KG-Microbe	has chemical link	Metabolites
+GIMICA	has functional link	Protein
+GIMICA	has taxonomic link	Microbe
+GIMICA	has functional link	Integrated Source DB
+GIMICA	has disease link	Disease
+Disbiome	has taxonomic link	Microbe
+Disbiome	has disease link	Disease
+BacDive	has functional link	Protein
+BacDive	has taxonomic link	Microbe
