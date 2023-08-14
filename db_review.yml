@@ -1,0 +1,16 @@
+name: db_review
+channels:
+    - bioconda
+    - conda-forge
+    - anaconda
+    - r
+dependencies:
+    - pip
+    - r-base=> 4.0
+    - r-essentials
+    - r-cowplot
+    - networkx
+    - pandas
+    - openpyxl
+    - pip:
+        - snakemake

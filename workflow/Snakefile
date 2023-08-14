@@ -1,0 +1,24 @@
+rule target:
+    input:
+        "plots/db_edge_matrix_children.png"
+
+rule expand_db_children:
+    input:
+        "data/Resource Interaction Table.xlsx"
+    output:
+        "data/expanded_edge_list.csv"
+    shell:
+        """ 
+        python scripts/db_expansion.py
+        """
+
+rule plot_edge_matrix_children:
+    input:
+        "data/expanded_edge_list.csv",
+        "data/Resource Interaction Table.xlsx"
+    output:
+        "plots/db_edge_matrix_children.png"
+    shell:
+        """
+        Rscript scripts/integrated_db_plotting.R
+        """
