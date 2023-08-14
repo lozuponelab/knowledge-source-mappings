@@ -3,7 +3,7 @@ library(readxl)
 library(stringr)
 library(tidyverse)
 
-setwd('./scripts/')
+#setwd('./scripts/')
 full_edges <- read_csv('../data/expanded_edge_list.csv')
 orig_edges <- read_xlsx('../data/Resource Interaction Table.xlsx', sheet = 1)
 orig_edges %>% 
