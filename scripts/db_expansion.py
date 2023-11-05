@@ -2,7 +2,6 @@ import networkx as nx
 import pandas as pd
 
 myedges = pd.read_excel('./data/Resource Interaction Table.xlsx')
-myedges = myedges[myedges['predicate'] != 'has construction method']
 
 G = nx.from_pandas_edgelist(myedges,
                             create_using=nx.DiGraph())
