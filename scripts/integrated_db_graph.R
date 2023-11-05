@@ -19,7 +19,7 @@ mydat %>%
 mynodes %>% 
   merge(inDegree, all = T) %>% 
   mutate(inDegree = if_else(is.na(inDegree), 0, inDegree),
-         ISDB = as.character(category == 'Integrated DB')) -> mynodes
+         ISDB = as.character(category == 'Aggregate DB')) -> mynodes
 
 G <- graph_from_data_frame(mydat, directed = T, mynodes)
 
