@@ -1,8 +1,13 @@
-myedges <- read_xlsx('./data/Resource Interaction Table.xlsx')
-mynodes <- read_xlsx('./data/Resource Interaction Table.xlsx', sheet = 2)
+library(readxl)
+library(tidyverse)
+
+
+setwd('./')
+myedges <- read_xlsx('../data/Resource Interaction Table.xlsx')
+mynodes <- read_xlsx('../data/Resource Interaction Table.xlsx', sheet = 2)
 
 mynodes %>% 
-  filter(category == 'Integrated DB') %>% 
+  filter(category == 'Aggregate DB') %>% 
   pull(node) -> idbs
 
 myedges %>% 
@@ -13,4 +18,4 @@ myedges %>%
   rename(target = category) %>% 
   arrange(desc(source), desc(target)) -> category_edges
 
-write_tsv(category_edges, './data/category_edges.tsv')
+write_tsv(category_edges, '../data/category_edges.tsv')

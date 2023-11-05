@@ -3,7 +3,7 @@ library(readxl)
 library(stringr)
 library(tidyverse)
 
-setwd('./scripts/')
+setwd('./')
 full_edges <- read_csv('../data/expanded_edge_list.csv')
 orig_edges <- read_xlsx('../data/Resource Interaction Table.xlsx', sheet = 1)
 orig_edges %>% 
@@ -16,7 +16,7 @@ nodes <- read_xlsx('../data/Resource Interaction Table.xlsx', sheet = 2)
 #  mutate(category = str_replace(category, '\\/| ', '\n')) -> nodes
 
 nodes %>% 
-  filter(category == 'Aggregated\nDB') %>% 
+  filter(category == 'General\nAggregate\nDB') %>% 
   pull(node) -> reffed_idbs
 
 full_edges %>% 
@@ -26,8 +26,8 @@ full_edges %>%
 
 levels(distance_factor) <- rev(levels(distance_factor))
 category_sorted <- c('Microbe', 'Protein', 
-                     'Metabolites', 'Disease',
-                     'Aggregated DB')
+                     'Metabolites','Pathway','Disease',
+                     'General Aggregate DB')
 
 full_edges %>% 
   select(source, target, distance) %>% 
@@ -46,11 +46,16 @@ full_edges %>%
          source_f = factor(source, 
                            levels = source_sorted)) -> plot_dat 
 
+# New facet label names for category variable
+category_labels <- c('Microbe'='Microbe', 'Protein'='Protein', 
+                     'Metabolites'='Metabolite','Pathway'='PW','Disease'='Disease',
+                     'General Aggregate DB'='General Aggregate DB')
+
 plot_dat %>% 
   ggplot(aes(x = target, y = source_f, 
              fill = distance)) +
   geom_tile(color = 'black') +
-  facet_grid(~category, scales = 'free', space = 'free') +
+  facet_grid(~category, scales = 'free', space = 'free',labeller = labeller(category = category_labels)) +
   theme_bw(base_size = 11) + 
   theme(axis.text.x = element_text(angle = 270 + 45,
                                    hjust = 0,
@@ -59,9 +64,9 @@ plot_dat %>%
   labs(x = 'Target DB',
        y = 'Source DB',
        fill = 'Reference Degree',
-       title = 'Integrated Databases Links') -> db_viz_final
+       title = 'Aggregate Databases Links') -> db_viz_final
 
 ggsave('../db_viz_final.png',
        plot = db_viz_final,
-       width = 8, 
-       height = 4)
+       width = 12, 
+       height = 5)
