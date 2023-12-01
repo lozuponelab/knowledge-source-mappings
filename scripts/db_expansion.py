@@ -14,7 +14,6 @@ outdf = []
 for node in G.nodes():
     if node not in leaves:
         tmp_desc = set(nx.descendants(G, node))
-        #tmp_desc = leaves.intersection(tmp_desc)
         tmp_desc = list(tmp_desc)
         desc_dist = [nx.shortest_path_length(G, source=node, target=desc) for desc in tmp_desc]
             
