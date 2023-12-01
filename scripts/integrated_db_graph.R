@@ -8,10 +8,6 @@ mydat <- read_xlsx('./data/Resource Interaction Table.xlsx')
 mynodes <- read_xlsx('./data/Resource Interaction Table.xlsx', sheet = 2)
 
 mydat %>% 
-  filter(predicate != 'has construction method') %>% 
-  select(-predicate) -> mydat
-
-mydat %>% 
   group_by(target) %>% 
   summarise(inDegree = n()) %>% 
   rename(node = target) -> inDegree
