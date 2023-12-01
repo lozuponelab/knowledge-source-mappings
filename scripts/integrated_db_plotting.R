@@ -6,14 +6,10 @@ library(tidyverse)
 setwd('./')
 full_edges <- read_csv('../data/expanded_edge_list.csv')
 orig_edges <- read_xlsx('../data/Resource Interaction Table.xlsx', sheet = 1)
-orig_edges %>% 
-  filter(predicate != 'has construction method') -> orig_edges
 
 fill_deg <- max(full_edges$distance) + 1
 
 nodes <- read_xlsx('../data/Resource Interaction Table.xlsx', sheet = 2)
-#nodes %>% 
-#  mutate(category = str_replace(category, '\\/| ', '\n')) -> nodes
 
 nodes %>% 
   filter(category == 'General\nAggregate\nDB') %>% 
@@ -61,10 +57,10 @@ plot_dat %>%
                                    hjust = 0,
                                    vjust = 0.5)) +
   scale_fill_brewer(guide = guide_legend(reverse = TRUE)) +
-  labs(x = 'Target DB',
-       y = 'Source DB',
+  labs(x = 'Integrated Resource',
+       y = 'Primary Source',
        fill = 'Reference Degree',
-       title = 'Aggregate Databases Links') -> db_viz_final
+       title = 'Primary Source Mappings of all Integrated Resources') -> db_viz_final
 
 ggsave('../db_viz_final.png',
        plot = db_viz_final,
