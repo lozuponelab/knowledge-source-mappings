@@ -1,7 +1,7 @@
 import networkx as nx
 import pandas as pd
 
-myedges = pd.read_excel('./data/Resource Interaction Table.xlsx')
+myedges = pd.read_excel('../data/Resource Interaction Table.xlsx')
 
 G = nx.from_pandas_edgelist(myedges,
                             create_using=nx.DiGraph())
@@ -24,5 +24,5 @@ for node in G.nodes():
         outdf.append(tmp_df)
 
 outdf = pd.concat(outdf)
-outdf.to_csv('./data/expanded_edge_list.csv',
+outdf.to_csv('../data/expanded_edge_list.csv',
              index=False)
