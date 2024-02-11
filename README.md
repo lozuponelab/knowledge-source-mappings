@@ -96,4 +96,5 @@ erDiagram
 
 ### Reference Matrix Visualization
 We then use our expanded reference table to hierarchically cluster the Source Databases (plotted along the y-axis) based off edge distance to the child nodes.
-![alt text](./plots/db_edge_matrix_children.png "Database Links with Children")
+This can be done with the Resource Interaction Table-withIntegrated.xlsx file to include all integrated database, or with the Resource Interaction Table.xlsx file for only aggregate databases (as shown here):
+![alt text](./db_viz_final.png)
