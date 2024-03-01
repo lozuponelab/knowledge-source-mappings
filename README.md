@@ -65,7 +65,7 @@ mamba env create -f db_review.yml
 snakemake --cores 1
 ```
 #### Child Database Expansion
-The `db_expansion.py` script generates the edge distance between a given database `i` and all child databases that it references. An example case for WikiPathways is given below.
+The `db_expansion.py` script generates the edge distance between a given database `i` and all child databases that it references. An example case for WikiPathways is given below (note that this diagram may not render in some versions of Safari).
 
 ```mermaid
 ---
