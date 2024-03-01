@@ -69,15 +69,15 @@ The `db_expansion.py` script generates the edge distance between a given databas
 
 ```mermaid
 title: Order example
-    WikiPathways ||--o{ "NCBIGene" : "functional link" }
-    WikiPathways ||--o{ "ChEBI" : "chemical link" }
-    WikiPathways ||--o{ "HMDB" : "chemical link" }
-    HMDB ||--o{ "GenBank" : "taxonomic link" }
-    HMDB ||--o{ "ChEBI" : "chemical link" }
-    HMDB ||--o{ "PubChem" : "chemical link" }
-    HMDB ||--o{ "UniProt" : "functional link" }
-    HMDB ||--o{ "PDB" : "functional link" }
-    HMDB ||--o{ "OMIM" : "disease link" } 
+    WikiPathways ||--o{ "NCBIGene" : "functional link";
+    WikiPathways ||--o{ "ChEBI" : "chemical link";
+    WikiPathways ||--o{ "HMDB" : "chemical link";
+    HMDB ||--o{ "GenBank" : "taxonomic link";
+    HMDB ||--o{ "ChEBI" : "chemical link";
+    HMDB ||--o{ "PubChem" : "chemical link";
+    HMDB ||--o{ "UniProt" : "functional link";
+    HMDB ||--o{ "PDB" : "functional link";
+    HMDB ||--o{ "OMIM" : "disease link";
 ```
 
 | Source DB    | Target DB | Edge Distance |
